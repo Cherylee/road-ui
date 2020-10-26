@@ -39,6 +39,13 @@ module.exports = {
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''//这个理解成用process.env.VUE_APP_BASE_API直接代替target配置的地址
         }
+      },
+      [process.env.VUE_APP_DEVICE_API]: {
+        target: process.env.VUE_APP_DEVICE_URL,
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_DEVICE_API]: ''//这个理解成用process.env.VUE_APP_BASE_API直接代替target配置的地址
+        }
       }
     },
     disableHostCheck: true

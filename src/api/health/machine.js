@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询设备列表
 export function listMachine(query) {
   return request({
-    url: '/system/machine/list',
+    url: '/bridge/machine/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listMachine(query) {
 // 查询设备详细
 export function getMachine(id) {
   return request({
-    url: '/system/machine/' + id,
+    url: '/bridge/machine/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getMachine(id) {
 // 新增设备
 export function addMachine(data) {
   return request({
-    url: '/system/machine',
+    url: '/bridge/machine',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addMachine(data) {
 // 修改设备
 export function updateMachine(data) {
   return request({
-    url: '/system/machine',
+    url: '/bridge/machine',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateMachine(data) {
 // 删除设备
 export function delMachine(id) {
   return request({
-    url: '/system/machine/' + id,
+    url: '/bridge/machine/' + id,
     method: 'delete'
   })
 }

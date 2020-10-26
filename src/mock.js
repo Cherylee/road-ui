@@ -46,57 +46,61 @@ setInterval(() => {
   realData.data[4]['site'] = parseFloat(Math.random() * 1).toFixed(2)
 }, 1000)
 
-// mock测试数据
+// 首页mainIndex 基础数据-------------------------------------------------------------
 const roadInfo = {
   "data": {
-    info: {
-      "description": "xxxx公路系统",
-      "bridgeNum": 10,
-      "tunnelNum": 20,
-      "monitoringPointNum": 5,
-      "sensor": 2,
-    },
-    sensor: {
-      "legendData": ["在线", "异常"],
-      "xAxisData": ["1月", "4月", "7月", "10月"],
-      "series": [{
-          name: "在线",
-          data: [4.3, 2.5, 3.2, 3.6],
-        },
-        {
-          name: "异常",
-          data: [2.3, 4.5, 4.3, 2.3],
-        },
-      ],
-    },
-    car: {
-      "legendData": ["小型车", "中型车", "大型车"],
-      "xAxisData": ["1月", "4月", "7月", "10月"],
-      "series": [{
-          name: "小型车",
-          data: [4.3, 2.5, 3.2, 3.6],
-        },
-        {
-          name: "中型车",
-          data: [2.3, 4.5, 4.3, 2.3],
-        },
-        {
-          name: "大型车",
-          data: [2, 4, 3.2, 3.9],
-        },
-      ],
-    },
+    "description": "xxxx公路系统",
+    "sensorNum": 105,
+    "normalNum": 98,
+    "maintainNum": 7,
+    "datalist": [{
+      'content': '传感器 1xxxxxxxxxx'
+    }, {
+      'content': '传感器 1xxxxxxxxxx'
+    }, {
+      'content': '传感器 1xxxxxxxxxx'
+    }]
+    // car: {
+    //   "legendData": ["小型车", "中型车", "大型车"],
+    //   "xAxisData": ["1月", "4月", "7月", "10月"],
+    //   "series": [{
+    //       name: "小型车",
+    //       data: [4.3, 2.5, 3.2, 3.6],
+    //     },
+    //     {
+    //       name: "中型车",
+    //       data: [2.3, 4.5, 4.3, 2.3],
+    //     },
+    //     {
+    //       name: "大型车",
+    //       data: [2, 4, 3.2, 3.9],
+    //     },
+    //   ],
+    // },
 
-  },
+  }
 }
+const safety = {
+    "data": [{
+      'content': '传感器 1xxxxxxxxxx'
+    }, {
+      'content': '传感器 1xxxxxxxxxx'
+    }, {
+      'content': '传感器 1xxxxxxxxxx'
+    }]
+  }
+  
 
 let sensorRealData = {
   "rows": [{
     id: 'id123545522124',
-    num: 2,
+    reason: '超速100公里',
+    status: '状态1',
+    solve: '建议警示扣分处理',
+    num: 22,
     code: 'DGJ1023',
     name: '传感器001',
-    site: num1,
+    deptName: '深海高速厦门段A标',
     time: '2012-12-12',
     changeSite: '0.12',
     situation: '666',
@@ -108,10 +112,13 @@ let sensorRealData = {
     wgsYmm: '102.25'
   }, {
     id: 'id123545522124',
-    num: 3,
+    reason: '超速100公里',
+    solve: '建议警示扣分处理',
+    status: '状态1',
+    num: 22,
     code: 'DGJ1023',
     name: '传感器001',
-    site: num2,
+    deptName: '深海高速厦门段A标',
     time: '2012-12-12',
     changeSite: '0.12',
     situation: '666',
@@ -123,10 +130,13 @@ let sensorRealData = {
     wgsYmm: '102.25'
   }, {
     id: 'id123545522124',
-    num: 3,
+    reason: '超速100公里',
+    solve: '建议警示扣分处理',
+    status: '状态1',
+    num: 22,
     code: 'DGJ1023',
     name: '传感器001',
-    site: num3,
+    deptName: '深海高速厦门段A标',
     time: '2012-12-12',
     changeSite: '0.12',
     situation: '666',
@@ -138,10 +148,13 @@ let sensorRealData = {
     wgsYmm: '102.25'
   }, {
     id: 'id123545522124',
-    num: 5,
+    reason: '超速100公里',
+    solve: '建议警示扣分处理',
+    status: '状态1',
+    num: 22,
     code: 'DGJ1023',
     name: '传感器001',
-    site: num4,
+    deptName: '深海高速厦门段A标',
     time: '2012-12-12',
     changeSite: '0.12',
     situation: '666',
@@ -153,10 +166,13 @@ let sensorRealData = {
     wgsYmm: '102.25'
   }, {
     id: 'id123545522124',
-    num: 4,
+    reason: '超速100公里',
+    solve: '建议警示扣分处理',
+    status: '状态1',
+    num: 22,
     code: 'DGJ1023',
     name: '传感器001',
-    site: num5,
+    deptName: '深海高速厦门段A标',
     time: '2012-12-12',
     changeSite: '0.12',
     situation: '666',
@@ -169,24 +185,57 @@ let sensorRealData = {
   }],
   "total": 5
 }
+
+const sensorHistoryData = sensorRealData
+const sensorName = ['压力传感器', '距离传感器', '速度传感器']
+let shu = 111111
+let myDate = '2012-12-12'
+
 setInterval(() => {
-  realNum(['site', 'num', 'wgsH', 'wgsX', 'wgsY', 'wgsHmm', 'wgsXmm', 'wgsYmm'], sensorRealData.rows)
+  realNum(['code', 'name', 'site', 'num', 'wgsH', 'wgsX', 'wgsY', 'wgsHmm', 'wgsXmm', 'wgsYmm'], sensorRealData.rows)
   // realID(['code', 'id'], sensorRealData.rows)
   realTime(['time'], sensorRealData.rows)
   // realName('name', sensorRealData.rows,'传感器')
-}, 1000)
-
-const sensorHistoryData=sensorRealData
-
-const time = ['2020-10-10', '2020-2-25', '2020-5-6']
+  myDate = currentTime()
+  shu++
+  if (shu > 1000000) {
+    shu = 111111
+  }
+}, 2000)
 // 随机数
 function realNum(name, array) {
   for (let i = 0; i < name.length; i++) {
     for (let index = 0; index < array.length; index++) {
-      array[index][name[i]] = parseFloat(Math.random() * 1).toFixed(2)
+      if (name[i] == 'wgsH') {
+        array[index][name[i]] = parseFloat(35 + Math.random() * 0.01).toFixed(4)
+      } else if (name[i] == 'name') {
+        array[index][name[i]] = sensorName[Math.floor((Math.random() * sensorName.length))]
+      } else if (name[i] == 'code') {
+        shu = shu + index
+        array[index][name[i]] = 'GBL' + shu
+      } else if (name[i] == 'wgsX') {
+        array[index][name[i]] = parseFloat(3560009.33 + Math.random() * 0.01).toFixed(4)
+      } else if (name[i] == 'wgsY') {
+        array[index][name[i]] = parseFloat(373522.76 + Math.random() * 0.01).toFixed(4)
+      } else if (name[i] == 'wgsHmm') {
+        array[index][name[i]] = parseFloat(48 + Math.random() * 10.1).toFixed(1)
+      } else if (name[i] == 'wgsXmm') {
+        array[index][name[i]] = parseFloat(750 + Math.random() * 10.1).toFixed(1)
+      } else if (name[i] == 'wgsYmm') {
+        array[index][name[i]] = parseFloat(390 + Math.random() * 10.1).toFixed(1)
+      }
+
     }
   }
 
+}
+// 随机时间
+function realTime(name, array) {
+  for (let i = 0; i < name.length; i++) {
+    for (let index = 0; index < array.length; index++) {
+      array[index][name[i]] = myDate
+    }
+  }
 }
 // 唯一ID
 function realID(name, array) {
@@ -197,19 +246,43 @@ function realID(name, array) {
   }
 
 }
-// 随机时间
-function realTime(name, array) {
-  for (let i = 0; i < name.length; i++) {
-    for (let index = 0; index < array.length; index++) {
-      array[index][name[i]] = time[Math.floor((Math.random() * time.length))]
-    }
-  }
+// 当前时间
+function currentTime() {
+  let time = ''
+  var date = new Date();
+  var year = date.getFullYear(); //获取当前年份  
+  var mon = date.getMonth() + 1; //获取当前月份  
+  var da = date.getDate(); //获取当前日  
+  var day = date.getDay(); //获取当前星期几  
+  var h = date.getHours(); //获取小时  
+  var m = date.getMinutes(); //获取分钟  
+  var s = date.getSeconds(); //获取秒  
+  var d = document.getElementById('Date');
+  time = year + '-' + mon + '-' + da + ' ' + h + ':' + m + ':' + s
+  return time
 }
-// 随机传感器名称
-function realName(name, array, text) {
-  for (let index = 0; index < array.length; index++) {
-    array[index][name] = text+parseInt(Math.random() * 100)
-  }
+const videoSurveillance = {
+  "data": [{
+    name: '设备1',
+    id: '4',
+    key: '0'
+  }, {
+    name: '设备2',
+    id: '4',
+    key: '1'
+  }, {
+    name: '设备3',
+    id: '4',
+    key: '2'
+  }, {
+    name: '设备4',
+    id: '4',
+    key: '3'
+  }, {
+    name: '设备5',
+    id: '4',
+    key: '4'
+  }]
 }
 
 
@@ -217,20 +290,67 @@ export default ({
   mock
 }) => {
   if (!mock) return;
-  // 公路基本信息
-  Mock.mock(RegExp('/roadInfo'), 'post', () => {
+  // 首页------------------------------------------------------------------
+  // 基本信息
+  // 健康系统
+  Mock.mock(RegExp('/healthInfo'), 'post', () => {
     return roadInfo;
   });
-  // 传感器实时数据---首页
+  // 边坡岩土系统
+  Mock.mock(RegExp('/slopeInfo'), 'post', () => {
+    return roadInfo;
+  });
+  // 视频监控
+  Mock.mock(RegExp('/videoInfo'), 'post', () => {
+    return roadInfo;
+  });
+  // 交通安全设施撞击预警
+  Mock.mock(RegExp('/safeInfo'), 'post', () => {
+    return safety;
+  });
+  // 路侧智能交互预警
+  Mock.mock(RegExp('/intelligenceInfo'), 'post', () => {
+    return safety;
+  });
+  // Mock.mock(RegExp('/accidentList'), 'post', () => {
+  //   return accidentList;
+  // });
+  // 传感器实时数据
   Mock.mock(RegExp('/realData'), 'post', () => {
     return realData;
   });
-  // 不同传感器实时数据
-  Mock.mock(RegExp('/system/sensor/realData'), 'get', () => {
+  // 健康系统---------------------------------------------------------------
+  // 实时数据
+  Mock.mock(RegExp('/health/sensor/realData'), 'get', () => {
     return sensorRealData;
   });
-  // 不同传感器历史数据
-  Mock.mock(RegExp('/system/sensor/historyData'), 'get', () => {
+  // 历史数据
+  Mock.mock(RegExp('/health/sensor/historyData'), 'get', () => {
     return sensorHistoryData;
+  });
+  // 预警数据
+  Mock.mock(RegExp('/health/sensor/warningData'), 'get', () => {
+    return sensorHistoryData;
+  });
+  // 视频监控
+  Mock.mock(RegExp('/health/sensor/videoSurveillance'), 'post', () => {
+    return videoSurveillance;
+  });
+  // 边坡系统---------------------------------------------------------------
+  // 实时数据
+  Mock.mock(RegExp('/slope/sensor/realData'), 'get', () => {
+    return sensorRealData;
+  });
+  // 历史数据
+  Mock.mock(RegExp('/slope/sensor/historyData'), 'get', () => {
+    return sensorHistoryData;
+  });
+  // 预警数据
+  Mock.mock(RegExp('/slope/sensor/warningData'), 'get', () => {
+    return sensorHistoryData;
+  });
+  // 视频监控
+  Mock.mock(RegExp('/slope/sensor/videoSurveillance'), 'post', () => {
+    return videoSurveillance;
   });
 }

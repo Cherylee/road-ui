@@ -158,13 +158,9 @@
 <script>
 import { listUser, getUser, delUser, addUser, updateUser, resetUserPwd, changeUserStatus } from "@/api/system/user";
 import { getToken } from "@/utils/auth";
-import { treeselect } from "@/api/system/dept";
-import Treeselect from "@riophae/vue-treeselect";
-import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
 export default {
   name: "User",
-  components: { Treeselect },
   data() {
     return {
       // 遮罩层
@@ -228,7 +224,6 @@ export default {
   },
   created() {
     this.getList();
-    this.getTreeselect();
     this.getDicts("sys_normal_disable").then(response => {
       this.statusOptions = response.data;
     });
@@ -250,12 +245,7 @@ export default {
         }
       );
     },
-    /** 查询部门下拉树结构 */
-    getTreeselect() {
-      treeselect().then(response => {
-        this.deptOptions = response.data;
-      });
-    },
+   
     // 筛选节点
     filterNode(value, data) {
       if (!value) return true;

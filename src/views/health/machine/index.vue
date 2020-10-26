@@ -1,6 +1,12 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
       <el-form-item label="设备名称" prop="name">
         <el-input
           v-model="queryParams.name"
@@ -20,7 +26,12 @@
         />
       </el-form-item>
       <el-form-item label="设备类型" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择设备类型" clearable size="small">
+        <el-select
+          v-model="queryParams.type"
+          placeholder="请选择设备类型"
+          clearable
+          size="small"
+        >
           <el-option
             v-for="dict in typeOptions"
             :key="dict.dictValue"
@@ -30,8 +41,16 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button
+          type="cyan"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
 
@@ -43,7 +62,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:machine:add']"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -53,7 +73,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['system:machine:edit']"
-        >修改</el-button>
+          >修改</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -63,7 +84,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['system:machine:remove']"
-        >删除</el-button>
+          >删除</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -72,22 +94,39 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['system:machine:export']"
-        >导出</el-button>
+          >导出</el-button
+        >
       </el-col>
-	  <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :showSearch.sync="showSearch"
+        @queryTable="getList"
+      ></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="machineList" @selection-change="handleSelectionChange">
+    <el-table
+      v-loading="loading"
+      :data="machineList"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="设备ID" align="center" prop="id" />
       <el-table-column label="设备名称" align="center" prop="name" />
       <el-table-column label="设备编码" align="center" prop="code" />
-      <el-table-column label="设备类型" align="center" prop="type" :formatter="typeFormat" />
-      <el-table-column label="所属公路" align="center" prop="userName" />
+      <el-table-column
+        label="设备类型"
+        align="center"
+        prop="type"
+        :formatter="typeFormat"
+      />
+      <el-table-column label="归属站点" align="center" prop="deptName" />
       <el-table-column label="经度" align="center" prop="longitude" />
       <el-table-column label="纬度" align="center" prop="latitude" />
       <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -95,20 +134,22 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:machine:edit']"
-          >修改</el-button>
+            >修改</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:machine:remove']"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -137,11 +178,28 @@
         <el-form-item v-show="hide" label="公路id" prop="userId">
           <el-input v-model="form.userId" placeholder="请输入公路id" />
         </el-form-item>
-         <el-form-item label="公路名" prop="userName">
-          <el-input v-model="form.userName" placeholder="请输入公路名" @focus="openM('openUserDialog')"/>
+        <!-- <el-form-item label="公路名" prop="userName">
+          <el-input
+            v-model="form.userName"
+            placeholder="请输入公路名"
+            @focus="openM('openUserDialog')"
+          />
+        </el-form-item> -->
+        <el-form-item label="归属站点" prop="deptId">
+          <treeselect
+            v-model="form.deptId"
+            :options="deptOptions"
+            :disable-branch-nodes="true"
+            :show-count="true"
+            placeholder="请选择归属站点"
+          />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+          <el-input
+            v-model="form.remark"
+            type="textarea"
+            placeholder="请输入内容"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -150,24 +208,36 @@
       </div>
     </el-dialog>
     <!-- 公路管理弹出框组件 -->
-    <el-dialog title="公路管理" :visible.sync="openUserDialog" width="1200px" append-to-body>
+    <el-dialog
+      title="公路管理"
+      :visible.sync="openUserDialog"
+      width="1200px"
+      append-to-body
+    >
       <user-dialog @selectData="selectUserData" @cancelM="openM"></user-dialog>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { listMachine, getMachine, delMachine, addMachine, updateMachine } from "@/api/system/machine";
-import userDialog from "@/components/UserDialog";
-
+import {
+  listMachine,
+  getMachine,
+  delMachine,
+  addMachine,
+  updateMachine,
+} from "@/api/health/machine";
+import { treeselect } from "@/api/system/dept";
+import Treeselect from "@riophae/vue-treeselect";
+import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 export default {
   name: "Machine",
-   components: {
-    userDialog
+  components: {
+    Treeselect
   },
   data() {
     return {
-      hide:false,
+      hide: false,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -201,27 +271,36 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: "设备名称不能为空", trigger: "blur" }
+          { required: true, message: "设备名称不能为空", trigger: "blur" },
         ],
       },
       // 用户显示弹窗
       openUserDialog: false,
       // 点击确定以后确认的选中user对象
       userObj: {},
+      // 部门树选项
+      deptOptions: undefined,
     };
   },
   created() {
     this.getList();
-    this.getDicts("sys_machine_type").then(response => {
+    this.getTreeselect();
+    this.getDicts("sys_machine_type").then((response) => {
       this.typeOptions = response.data;
     });
   },
   methods: {
+    /** 查询部门下拉树结构 */
+    getTreeselect() {
+      treeselect().then((response) => {
+        this.deptOptions = response.data;
+      });
+    },
     // 用户组件回调
     selectUserData(res) {
       this.userObj = res[0];
-      this.form.userId=res[0].userId
-      this.form.userName=res[0].userName
+      this.form.userId = res[0].userId;
+      this.form.userName = res[0].userName;
     },
     // 弹出框 显示隐藏
     openM(dialog) {
@@ -231,7 +310,7 @@ export default {
     /** 查询设备列表 */
     getList() {
       this.loading = true;
-      listMachine(this.queryParams).then(response => {
+      listMachine(this.queryParams).then((response) => {
         this.machineList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -259,7 +338,7 @@ export default {
         createTime: null,
         updateBy: null,
         updateTime: null,
-        remark: null
+        remark: null,
       };
       this.resetForm("form");
     },
@@ -275,21 +354,23 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+      this.ids = selection.map((item) => item.id);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      this.getTreeselect();
       this.open = true;
       this.title = "添加设备";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id || this.ids
-      getMachine(id).then(response => {
+      this.getTreeselect();
+      const id = row.id || this.ids;
+      getMachine(id).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改设备";
@@ -297,10 +378,10 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (this.form.id != null) {
-            updateMachine(this.form).then(response => {
+            updateMachine(this.form).then((response) => {
               if (response.code === 200) {
                 this.msgSuccess("修改成功");
                 this.open = false;
@@ -308,7 +389,7 @@ export default {
               }
             });
           } else {
-            addMachine(this.form).then(response => {
+            addMachine(this.form).then((response) => {
               if (response.code === 200) {
                 this.msgSuccess("新增成功");
                 this.open = false;
@@ -323,22 +404,29 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除设备编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(function () {
           return delMachine(ids);
-        }).then(() => {
+        })
+        .then(() => {
           this.getList();
           this.msgSuccess("删除成功");
-        }).catch(function() {});
+        })
+        .catch(function () {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('system/machine/export', {
-        ...this.queryParams
-      }, `system_machine.xlsx`)
-    }
-  }
+      this.download(
+        "system/machine/export",
+        {
+          ...this.queryParams,
+        },
+        `system_machine.xlsx`
+      );
+    },
+  },
 };
 </script>

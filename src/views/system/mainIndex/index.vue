@@ -8,10 +8,14 @@
             <el-col :md="9">
               <el-row :gutter="20" class="top-box-btn">
                 <el-col :md="8">
-                  <div class="l-btn-enter">系统功能1</div>
+                  <el-link
+                    class="l-btn-enter"
+                    :underline="false"
+                    href="/system/index"
+                    >进入后台管理系统</el-link
+                  >
                 </el-col>
                 <el-col :md="8">
-                  <div class="l-btn-enter">系统功能2</div>
                 </el-col>
               </el-row>
             </el-col>
@@ -29,12 +33,7 @@
             <el-col :md="9">
               <el-row :gutter="20" class="top-box-btn">
                 <el-col :md="8">
-                  <el-link
-                    class="l-btn-enter"
-                    :underline="false"
-                    href="/system/index"
-                    >进入后台管理系统</el-link
-                  >
+                  
                 </el-col>
                 <el-col :md="8">
                   <el-link
@@ -54,30 +53,107 @@
     <el-row :gutter="20">
       <!-- 左边 -->
       <el-col :md="5">
-        <!-- 高速路概况 -->
+        <!-- 桥梁健康 -->
         <div class="data-box1">
-          <main-index-border :title="content1.title"></main-index-border>
+          <main-index-border :title="content1.title" :url="content1.url"></main-index-border>
           <div class="xmglan">
             <div class="intro-box">
-              <p>公路介绍：{{ content1.detailData.description }}</p>
-              <p>桥的数量：{{ content1.detailData.bridgeNum }}</p>
-              <p>隧道数量：{{ content1.detailData.tunnelNum }}</p>
-              <p>监测点数量：{{ content1.detailData.monitoringPointNum }}</p>
-              <p>传感器数量：{{ content1.detailData.sensor }}</p>
+              <p class="main-p">传感器:{{ content1.detailData.sensorNum }}个</p>
+              <div class="intro-box-text-box">
+                <p>正常：{{ content1.detailData.normalNum }}</p>
+                <p>待维护：{{ content1.detailData.maintainNum }}</p>
+              </div>
+              <h3 class="title-main">异常数据</h3>
+              <ul class="data-main-box" v-if="content1.detailData.datalist">
+                <li
+                  v-for="(item, index) in content1.detailData.datalist"
+                  :key="index"
+                >
+                  {{ index + 1 }}：{{ item.content }}
+                </li>
+              </ul>
+              <p v-else class="has-no-text">暂无数据</p>
             </div>
           </div>
         </div>
-        <!-- 车流量统计 -->
+        <!-- 边坡岩土 -->
         <div class="data-box1">
           <main-index-border :title="content3.title"></main-index-border>
           <div class="xmglan">
-            <div class="chart-wrapper">
+            <div class="intro-box">
+              <p class="main-p">传感器:{{ content3.detailData.sensorNum }}个</p>
+              <div class="intro-box-text-box">
+                <p>正常：{{ content3.detailData.normalNum }}</p>
+                <p>待维护：{{ content3.detailData.maintainNum }}</p>
+              </div>
+              <h3 class="title-main">报警数据</h3>
+              <ul class="data-main-box" v-if="content3.detailData.datalist">
+                <li
+                  v-for="(item, index) in content3.detailData.datalist"
+                  :key="index"
+                >
+                  {{ index + 1 }}：{{ item.content }}
+                </li>
+              </ul>
+              <p v-else class="has-no-text">暂无数据</p>
+            </div>
+            <!-- <div class="chart-wrapper">
               <line-chart
                 v-if="content3.detailData.legendData"
                 :chart-data="content3.detailData"
               />
-              <!-- <raddar-chart /> -->
+            </div> -->
+          </div>
+        </div>
+        <!-- 交通安全设施撞击预警 -->
+        <div class="data-box1">
+          <main-index-border :title="content7.title"></main-index-border>
+          <div class="xmglan">
+            <div class="intro-box">
+              <br>
+              <h3 class="title-main">数据</h3>
+              <ul class="data-main-box" v-if="content7.detailData">
+                <li
+                  v-for="(item, index) in content7.detailData"
+                  :key="index"
+                >
+                  {{ index + 1 }}：{{ item.content }}
+                </li>
+              </ul>
+              <p v-else class="has-no-text">暂无数据</p>
             </div>
+            <!-- <div class="chart-wrapper">
+              <line-chart
+                v-if="content3.detailData.legendData"
+                :chart-data="content3.detailData"
+              />
+            </div> -->
+          </div>
+        </div>
+        
+        <!-- 路侧智能交互预警 -->
+        <div class="data-box1">
+          <main-index-border :title="content8.title"></main-index-border>
+          <div class="xmglan">
+            <div class="intro-box">
+              <br>
+              <h3 class="title-main">数据</h3>
+              <ul class="data-main-box" v-if="content8.detailData">
+                <li
+                  v-for="(item, index) in content8.detailData"
+                  :key="index"
+                >
+                  {{ index + 1 }}：{{ item.content }}
+                </li>
+              </ul>
+              <p v-else class="has-no-text">暂无数据</p>
+            </div>
+            <!-- <div class="chart-wrapper">
+              <line-chart
+                v-if="content3.detailData.legendData"
+                :chart-data="content3.detailData"
+              />
+            </div> -->
           </div>
         </div>
       </el-col>
@@ -86,28 +162,74 @@
         <div class="data-box1">
           <main-index-border :title="content5.title"></main-index-border>
           <!-- <img src="@/assets/image/map.jpg" alt /> -->
-          <map-box mapWidth="100%" mapHeight="720px"></map-box>
+          <map-box mapWidth="100%" mapHeight="550px"></map-box>
+        </div>
+        <!-- 交通事故汇总 -->
+        <div class="data-box1">
+          <main-index-border :title="content6.title"></main-index-border>
+          <br>
+          <el-table v-loading="loading" :data="accidentListData">
+            <el-table-column label="序号" align="center" prop="sort" />
+            <el-table-column label="事故原因" align="center" prop="reason" />
+            <el-table-column label="发生地点" align="center" prop="address" />
+            <el-table-column label="发生时间" align="center" prop="time" />
+            <el-table-column label="处理情况" align="center" prop="situation" />
+            <el-table-column label="办理人员" align="center" prop="handle" />
+            <el-table-column
+              label="办理时间"
+              align="center"
+              prop="processingTime"
+            />
+          </el-table>
+          <pagination
+            v-show="total > 0"
+            :total="total"
+            :page.sync="queryParams.pageNum"
+            :limit.sync="queryParams.pageSize"
+            @pagination="getAccidentList"
+          />
         </div>
       </el-col>
       <!-- 右边 -->
       <el-col :md="5">
-        <!-- 传感器监测数据统计 -->
+        <!-- 视频监控 -->
         <div class="data-box1">
           <main-index-border :title="content2.title"></main-index-border>
           <div class="xmglan">
-            <div class="chart-wrapper">
+            <div class="intro-box">
+              <div class="intro-box-text-box">
+                <p>设备：{{ content2.detailData.sensorNum }}</p>
+                <p>道路：{{ content2.detailData.roadNum }}</p>
+                <p>服务区：{{ content2.detailData.serviceNum }}</p>
+              </div>
+              <div class="intro-box-text-box">
+                <p>正常：{{ content2.detailData.normalNum }}</p>
+                <p>待维护：{{ content2.detailData.maintainNum }}</p>
+              </div>
+              <h3 class="title-main">异常数据</h3>
+              <ul class="data-main-box" v-if="content2.detailData.datalist">
+                <li
+                  v-for="(item, index) in content2.detailData.datalist"
+                  :key="index"
+                >
+                  {{ index + 1 }}：{{ item.content }}
+                </li>
+              </ul>
+              <p v-else class="has-no-text">暂无数据</p>
+            </div>
+            <!-- <div class="chart-wrapper">
               <bar-chart
                 v-if="content2.detailData.legendData"
                 :chart-data="content2.detailData"
               />
-            </div>
+            </div> -->
           </div>
         </div>
         <!-- 传感器监测数据实时统计 -->
         <div class="data-box1">
           <main-index-border :title="content4.title"></main-index-border>
           <div class="xmglan">
-            <div class="">
+            <!-- <div class="">
               <table class="main-table">
                 <tr class="">
                   <th>传感器名称</th>
@@ -124,38 +246,32 @@
                   <td>{{ list.situation }}</td>
                 </tr>
               </table>
-              <!-- <pie-chart /> -->
-              <!-- <el-table  :data="content4.detailData">
-                <el-table-column
-                  prop="name"
-                  label="传感器名称"
-                  width="260"
-                ></el-table-column>
-                <el-table-column prop="time" label="采集时间" width="200"
-                  ><template slot-scope="scope">
-                    <span>{{ parseTime(scope.row.createTime) }}</span>
-                  </template></el-table-column
-                >
-                <el-table-column
-                  prop="site"
-                  label="采集点位置"
-                  width="100"
-                ></el-table-column>
-                <el-table-column
-                  label="采集数据变化量"
-                  align="center"
-                  prop="changeSite"
-                  width="200"
-                >
-                </el-table-column>
-                <el-table-column
-                  label="预警情况"
-                  align="center"
-                  prop="situation"
-                  width="200"
-                >
-                </el-table-column>
-              </el-table> -->
+              
+            </div> -->
+            <div class="intro-box">
+              <br>
+              <p class="has-no-text">程序员正努力开发中，敬请期待。。。</p>
+            </div>
+          </div>
+        </div>
+        
+         <!-- 智慧驿站 -->
+        <div class="data-box1">
+          <main-index-border :title="content9.title"></main-index-border>
+          <div class="xmglan">
+            <div class="intro-box">
+              <br>
+              <p class="has-no-text">程序员正努力开发中，敬请期待。。。</p>
+            </div>
+          </div>
+        </div>
+         <!-- 可变信息发布 -->
+        <div class="data-box1">
+          <main-index-border :title="content10.title"></main-index-border>
+          <div class="xmglan">
+            <div class="intro-box">
+              <br>
+              <p class="has-no-text">程序员正努力开发中，敬请期待。。。</p>
             </div>
           </div>
         </div>
@@ -171,7 +287,7 @@ import RaddarChart from "@/views/dashboard/RaddarChart";
 import BarChart from "@/views/dashboard/BarChart";
 import LineChart from "@/views/dashboard/LineChart";
 import MapBox from "@/components/MapBox";
-import { roadInfo, realData } from "@/api/system/mainIndex";
+import { healthInfo, slopeInfo,videoInfo,safeInfo,intelligenceInfo, accidentList } from "@/api/system/mainIndex";
 
 export default {
   name: "mainIndex",
@@ -186,46 +302,108 @@ export default {
   data() {
     return {
       content1: {
-        title: "高速路概况",
+        title: "桥梁健康",
         detailData: {},
+        url:'/health/info'
       },
       content2: {
-        title: "传感器监测数据统计",
+        title: "视频监控",
         detailData: {},
       },
       content3: {
-        title: "车流量统计",
+        title: "边坡岩土",
         detailData: {},
+        url:'/slope/info'
       },
       content4: {
-        title: "传感器监测数据实时统计",
-        detailData:{}
+        title: "智能道桥冰雪预警处置",
+        detailData: {},
       },
       content5: {
         title: "MapBox地图",
       },
+      content6: {
+        title: "交通事故汇总",
+        detailData: {},
+      },
+      content7: {
+        title: "交通安全设施撞击预警",
+        detailData: {},
+      },
+      content8: {
+        title: "路侧智能交互预警",
+        detailData: {},
+      },
+      content9: {
+        title: "智慧驿站",
+        detailData: {},
+      },
+      content10: {
+        title: "可变信息发布",
+        detailData: {},
+      },
       loading: false,
+      // 总条数
+      total: 0,
+      accidentListData: [],
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+      },
     };
   },
   created() {
-    this.getRoadInfo();
-    this.getRealData();
+    this.getHealthInfo();
+    this.getSlopeInfo();
+    this.getVideoInfo();
+    this.getSafeInfo();
+    this.getIntelligenceInfo();
+    // this.getRealData();
+    this.getAccidentList();
   },
   methods: {
-    getRoadInfo() {
-      roadInfo().then((res) => {
-        this.content1.detailData = res.data.info;
-        this.content2.detailData = res.data.sensor;
-        this.content3.detailData = res.data.car;
+    getHealthInfo() {
+      healthInfo().then((res) => {
+        this.content1.detailData = res.data;
       });
     },
-    getRealData() {
-      setInterval(() => {
-        realData().then((res) => {
-          this.content4.detailData = res.data;
-        });
-      }, 1000);
+    getSlopeInfo() {
+      slopeInfo().then((res) => {
+        this.content3.detailData = res.data;
+      });
     },
+    getVideoInfo() {
+      videoInfo().then((res) => {
+        this.content2.detailData = res.data;
+      });
+    },
+    getSafeInfo() {
+      safeInfo().then((res) => {
+        console.log(res)
+        this.content7.detailData = res.data;
+      });
+    },
+    getIntelligenceInfo() {
+      intelligenceInfo().then((res) => {
+        this.content8.detailData = res.data;
+      });
+    },
+    getAccidentList() {
+      this.loading = true;
+      accidentList().then((res) => {
+        this.accidentListData = res.rows;
+        this.total = res.total;
+        this.loading = false;
+      });
+    },
+    // getRealData() {
+    //   setInterval(() => {
+    //     realData().then((res) => {
+    //       this.content4.detailData = res.data;
+    //     });
+    //   }, 1000);
+    // },
     async logout() {
       this.$confirm("确定注销并退出系统吗？", "提示", {
         confirmButtonText: "确定",
@@ -241,7 +419,7 @@ export default {
 };
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scope>
 body {
   background: #000c3b;
 }
@@ -270,14 +448,14 @@ body {
   height: 30px;
   line-height: 30px;
   border: 1px solid #75c1f74a;
-  color: #2578b3;
+  color: #4da3de;
   text-align: center;
   font-size: 14px;
   border-radius: 4px;
 }
 .main-content {
   background: #000c3b;
-  padding: 0 20px;
+  padding: 0 20px 20px 20px;
   .top-box {
     .top-box-title {
       @extend %flex-common;
@@ -371,11 +549,61 @@ body {
     .intro-box {
       color: #ffffff;
       font-size: 14px;
-      padding: 20px;
+      padding: 0px 15px 15px 15px;
+      .intro-box-text-box {
+        width: 70%;
+        display: flex;
+        justify-content: space-between;
+      }
     }
   }
 }
-
+.title-main {
+  font-size: 14px;
+  margin-top: 0;
+  color: #ffffff;
+  background: #173b71;
+  padding: 9px;
+  margin: 0;
+  text-align: center;
+}
+.data-main-box {
+  background-color: #032558;
+  color: #ffffff;
+  padding: 10px 0;
+  margin: 0;
+  li {
+    padding: 10px;
+    list-style: none;
+    border-bottom: 1px solid #173b71;
+  }
+}
+.main-p {
+  margin-bottom: 0;
+}
+::v-deep .el-table .el-table__header-wrapper th {
+  background-color: #032558;
+  color: #a9d7ff;
+}
+::v-deep .el-table tr {
+  background-color: #021c4e;
+  color: #ffffff;
+}
+::v-deep .el-table--enable-row-transition .el-table__body td {
+  border-bottom: 1px solid #173b71;
+}
+::v-deep .pagination-container[data-v-72233bcd] {
+  background: none;
+}
+::v-deep .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #597194;
+}
+p.has-no-text {
+    background: #032558;
+    margin: 0;
+    padding: 16px;
+    text-align: center;
+}
 @media (max-width: 1024px) {
   .chart-wrapper {
     padding: 8px;

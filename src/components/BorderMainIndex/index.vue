@@ -6,7 +6,7 @@
     <div class="bottomR"></div>
     <div class="data-title">
       <span class="data-title-left fl">[</span>
-      <span class="title">{{title}}</span>
+      <span class="title"><a :href="url">{{title}}</a></span>
       <span class="data-title-right fr">]</span>
     </div>
   </div>
@@ -17,6 +17,10 @@ export default {
   name: "mainIndexBorder",
   props: {
     title: {
+      type: String,
+      default: "total, sizes, prev, pager, next, jumper",
+    },
+    url: {
       type: String,
       default: "total, sizes, prev, pager, next, jumper",
     },
@@ -102,7 +106,7 @@ $border-color: #0d9dc3d6;
     display: inline-block;
     text-align: center;
     font-size: 18px;
-    color: #2578b3;;
+    color: #93cef9;
     font-family: cursive;
     font-weight: bold;
   }
