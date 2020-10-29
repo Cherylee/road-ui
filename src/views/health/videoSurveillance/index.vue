@@ -82,14 +82,12 @@ export default {
         channelNo: "1",
         direction: "0",
         speed: "1",
-      },
+      }
     };
   },
   created() {
     this.clientHeight = document.body.clientHeight + "px";
     this.initVideoInfo();
-    
-    
   },
   methods: {
     // 根据设备id获取播放地址
@@ -123,17 +121,20 @@ export default {
     },
     // 选择设备
     handleCheckedChange(index, id, val) {
-       val = !val;
-        if (val == false) {
-          this.openVideo(id);
-        } else {
-          this.openAddress.splice(index, 1);
-        }
+      val = !val;
+      if (val == false) {
+        this.openVideo(id);
+      } else {
+        var num = this.openAddress.findIndex((el) => {
+          return el.id === id;
+        });
+        this.openAddress.splice(num, 1);
+      }
     },
     // 默认
     initCheckedChange(index) {
-       this.equipmentOptions[index]['checkbox']=true
-       this.openVideo(this.equipmentOptions[index].id);
+      this.equipmentOptions[index]["checkbox"] = true;
+      this.openVideo(this.equipmentOptions[index].id);
     },
     // 转动设备 flag:转动参数&id:设备id
     goto(flag, id) {
@@ -143,8 +144,7 @@ export default {
         this.param.deviceSerial = res.data.deviceSerial;
         this.param.channelNo = res.data.channelNo;
         this.param["direction"] = flag;
-        start(this.param).then((res) => {
-        });
+        start(this.param).then((res) => {});
       });
     },
   },

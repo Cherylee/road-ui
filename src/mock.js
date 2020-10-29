@@ -268,19 +268,19 @@ const videoSurveillance = {
     key: '0'
   }, {
     name: '设备2',
-    id: '4',
+    id: '5',
     key: '1'
   }, {
     name: '设备3',
-    id: '4',
+    id: '6',
     key: '2'
   }, {
     name: '设备4',
-    id: '4',
+    id: '7',
     key: '3'
   }, {
     name: '设备5',
-    id: '4',
+    id: '8',
     key: '4'
   }]
 }
